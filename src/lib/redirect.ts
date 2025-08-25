@@ -32,7 +32,8 @@ export function getRedirectUrl(tabId: number, url: string) {
       return {}
     }
   }
-  const redirectUrl = matchRule(rule, url).url
+  const redirectUrl = "finicky://open/" + btoa(matchRule(rule, url).url)
+
   if (redirectUrl === url) {
     return {}
   }

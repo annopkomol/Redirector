@@ -32,7 +32,15 @@ export function getRedirectUrl(tabId: number, url: string) {
       return {}
     }
   }
-  const redirectUrl = "finicky://open/" + btoa(matchRule(rule, url).url)
+
+  let redirectUrl = matchRule(rule, url).url;
+  const finickyPrefix = "finicky://open/";
+  if (redirectUrl.startsWith(finickyPrefix)) {
+    // Already a finicky URL, encode the rest
+    const originalUrl = redirectUrl.slice(finickyPrefix.length);
+    redirectUrl = finickyPrefix + btoa(originalUrl);
+  }
+
 
   if (redirectUrl === url) {
     return {}
